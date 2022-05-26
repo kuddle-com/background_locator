@@ -12,7 +12,7 @@ import rekab.app.background_locator.provider.LocationRequestOptions
 import java.util.concurrent.atomic.AtomicBoolean
 
 internal fun IsolateHolderService.startLocatorService(context: Context) {
-
+    try{
     val serviceStarted = AtomicBoolean(IsolateHolderService.isServiceRunning)
     // start synchronized block to prevent multiple service instant
     synchronized(serviceStarted) {
@@ -42,6 +42,7 @@ internal fun IsolateHolderService.startLocatorService(context: Context) {
             MethodChannel(IsolateHolderService.backgroundEngine!!.dartExecutor.binaryMessenger,
                     Keys.BACKGROUND_CHANNEL_ID)
     backgroundChannel.setMethodCallHandler(this)
+    }catch (e:Exception){}
 }
 
 fun getLocationRequest(intent: Intent): LocationRequestOptions {
